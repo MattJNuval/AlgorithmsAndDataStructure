@@ -1,9 +1,10 @@
-public class LinkedList {
+public class LinkedList implements LinkedListInterface{
     private Node root;
     private boolean results;
     private Node next;
     private Node prev;
 
+    @Override
     public void insert(int data) {
         insertNode(data, root);
     }
@@ -23,6 +24,7 @@ public class LinkedList {
         }
     }
 
+    @Override
     public void delete(int data) {
         System.out.println("\nDeleting: " + data);
         deleteNode(data, root, null);
@@ -57,11 +59,13 @@ public class LinkedList {
         }
     }
 
+    @Override
     public void reverse() {
+        System.out.println("\nReversing");
         reverseNode(root);
     }
 
-    public void reverseNode(Node curr) {
+    private void reverseNode(Node curr) {
         // Base case
         if(curr == null) {
             root = prev;
@@ -79,6 +83,7 @@ public class LinkedList {
         }
     }
 
+    @Override
     public boolean find(int data) {
         return findNode(data, root);
     }
@@ -96,6 +101,7 @@ public class LinkedList {
         return results;
     }
 
+    @Override
     public void print() {
         System.out.println("\nPrinting");
         printNode(root);
