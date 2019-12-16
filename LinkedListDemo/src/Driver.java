@@ -7,6 +7,8 @@ public class Driver {
         l.insert(4);
         l.insert(5);
 
+        l.reverse();
+
         l.print();
 
         l.delete(3);

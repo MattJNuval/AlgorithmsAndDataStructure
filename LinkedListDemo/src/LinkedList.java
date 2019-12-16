@@ -1,6 +1,8 @@
 public class LinkedList {
     private Node root;
     private boolean results;
+    private Node next;
+    private Node prev;
 
     public void insert(int data) {
         insertNode(data, root);
@@ -27,24 +29,53 @@ public class LinkedList {
     }
 
     private void deleteNode(int data, Node curr, Node prev) {
+        //Base case
         if(curr == null){
             System.out.println(data + " not found" );
         } else {
+            // If data is found
             if(curr.getData() == data) {
+                // If the current next node is not null
                 if(curr.getNextNode() != null) {
+                    // if the current data is not the root data
                     if(curr.getData() != root.getData()) {
                         prev.setNextNode(curr.getNextNode());
                         curr.setNextNode(null);
+                      //Otherwise
                     } else {
                         root = curr.getNextNode();
                         curr.setNextNode(null);
                     }
+                  //Otherwise
                 } else {
                     prev.setNextNode(null);
                 }
+              //Otherwise
             } else {
                 deleteNode(data, curr.getNextNode(), curr);
             }
+        }
+    }
+
+    public void reverse() {
+        reverseNode(root);
+    }
+
+    public void reverseNode(Node curr) {
+        // Base case
+        if(curr == null) {
+            root = prev;
+        } else {
+            // Set the next node to current next node
+            next = curr.getNextNode();
+            // Connect the current node with the previous node
+            curr.setNextNode(prev);
+            // Set the previous node with the current node
+            prev = curr;
+            // Set the current node with next node
+            curr = next;
+            // Recursive call
+            reverseNode(curr);
         }
     }
 
