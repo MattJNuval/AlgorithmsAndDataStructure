@@ -1,5 +1,8 @@
+import jdk.nashorn.api.tree.Tree;
+
 public class BST {
     private TreeNode root;
+    private TreeNode parent;
     private boolean result = false;
 
     public void insert(int data) {
@@ -7,30 +10,22 @@ public class BST {
     }
 
     private void insertNode(int data, TreeNode curr) {
-        System.out.println("INSERTING: " + data );
         if(root == null) {
-            System.out.println("Inserting " + data + " as root.");
             TreeNode newNode = new TreeNode(data);
             curr = newNode;
             root = curr;
         } else if(data <= curr.getData()) {
-            System.out.println(data + " <= " + curr.getData());
             if(curr.getLeft() != null) {
-                System.out.println("Shift left of " + curr.getData() + " to " + curr.getLeft().getData());
                 insertNode(data, curr.getLeft());
             } else {
-                System.out.println("Inserting " + data + " left of " + curr.getData());
                 TreeNode newNode = new TreeNode(data);
                 curr.setLeft(newNode);
                 curr.getLeft();
             }
         } else if(data > curr.getData()) {
-            System.out.println(data + " > " + curr.getData());
             if(curr.getRight() != null) {
-                System.out.println("Shift right of " + curr.getData() + " to " + curr.getRight().getData());
                 insertNode(data, curr.getRight());
             } else {
-                System.out.println("Inserting " + data + " right of " + curr.getData());
                 TreeNode newNode = new TreeNode(data);
                 curr.setRight(newNode);
             }
@@ -76,4 +71,73 @@ public class BST {
             inOrderTraversal(curr.getRight());
         }
     }
+
+
+    public void delete(int data) {
+        System.out.println("DELETING: " + data);
+        deleteNode(data, root);
+    }
+
+    private void deleteNode(int data, TreeNode curr) {
+        if(root == null || curr == null) {
+            System.out.print("Tree is empty");
+        }
+
+        if(data < curr.getData()) {
+            if(curr.getLeft() != null) {
+                parent = curr;
+                deleteNode(data, curr.getLeft());
+            } else {
+                System.out.println("Data not found");
+            }
+        } else if(data > curr.getData()) {
+            if(curr.getRight() != null) {
+                parent = curr;
+                deleteNode(data, curr.getRight());
+            } else {
+                System.out.println("Data not found");
+            }
+        } else if(data == curr.getData()) {
+            System.out.println(curr.getData() + " is founded");
+            if(curr.getLeft() == null && curr.getRight() == null) {
+                System.out.println(curr.getData() + " is a leaf");
+                if(parent.getLeft() == curr) {
+                    parent.setLeft(null);
+                } else if(parent.getRight() == curr) {
+                    parent.setRight(null);
+                }
+            } else if(curr.getRight() == null) {
+                System.out.println(curr.getData() + " has one child");
+                if(parent.getLeft() == curr) {
+                    parent.setLeft(curr.getLeft());
+                } else if(parent.getRight() == curr) {
+                    parent.setRight(curr.getLeft());
+                }
+            } else if(curr.getLeft() == null) {
+                System.out.println(curr.getData() + " has one child");
+                if(parent.getLeft() == curr) {
+                    parent.setLeft(curr.getRight());
+                } else if(parent.getRight() == curr) {
+                    parent.setRight(curr.getRight());
+                }
+            } else if(curr.getRight() != null && curr.getLeft() != null){
+                System.out.println(curr.getData() + " has two child");
+                TreeNode successor = minKey(curr.getRight());
+                int val = successor.getData();
+                System.out.println("The succ data is " + successor.getData());
+                deleteNode(successor.getData(), root);
+                curr.setData(val);
+            }
+        }
+
+    }
+
+    private TreeNode minKey(TreeNode curr) {
+        while(curr.getLeft() != null) {
+            curr = curr.getLeft();
+        }
+        return curr;
+    }
+
+
 }

@@ -14,6 +14,10 @@ public class Driver
         b.insert(7);
         b.insert(14);
         b.insert(13);
+        b.insert(15);
+
+        b.delete(8);
+        b.delete(6);
 
         b.traverse();
 

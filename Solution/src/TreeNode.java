@@ -1,6 +1,11 @@
 public class TreeNode {
     public TreeNode left;
     public TreeNode right;
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
     public int data;
 
     public TreeNode(int data) {
