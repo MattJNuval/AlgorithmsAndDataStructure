@@ -12,10 +12,8 @@ public class Driver {
         t.insert(14);
         t.insert(13);
 
-        t.find(7);
-        t.find(6);
-        t.find(0);
-        t.find(8);
+        t.delete(6);
+
 
         t.inOrderTraversal();
 
